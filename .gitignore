@@ -1,4 +1,6 @@
+# ========================
 # Logs
+# ========================
 logs
 *.log
 npm-debug.log*
@@ -7,24 +9,33 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# ========================
 # Dependency directories
-node_modules
+# ========================
+node_modules/
 
+# ========================
 # Build outputs
-dist
-dist-ssr
-*.cache
+# ========================
+dist/
+dist-ssr/
+*.cache/
 *.tsbuildinfo
 
+# ========================
 # Local environment files
+# ========================
 .env
 .env.local
 .env.*.local
 
+# ========================
 # Editor directories and files
-.vscode/*
+# ========================
+.VSCodeCounter/
+.vscode/
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
@@ -32,7 +43,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# ========================
 # OS generated files
+# ========================
 Thumbs.db
 ehthumbs.db
 Desktop.ini
