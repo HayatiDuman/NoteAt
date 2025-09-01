@@ -10,9 +10,45 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # ========================
+# Diagnostic reports
+# ========================
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ========================
+# Runtime data
+# ========================
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ========================
+# Coverage & Test
+# ========================
+coverage
+*.lcov
+.nyc_output
+.grunt
+
+# ========================
 # Dependency directories
 # ========================
 node_modules/
+bower_components
+jspm_packages/
+web_modules/
+
+# Yarn / PNPM / npm cache
+.npm
+.yarn/*
+.pnp.*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarn-integrity
+.pnpm-store/
 
 # ========================
 # Build outputs
@@ -21,6 +57,22 @@ dist/
 dist-ssr/
 *.cache/
 *.tsbuildinfo
+.next
+out
+.nuxt
+.output
+.vuepress/dist
+.temp
+.svelte-kit/
+**/.vitepress/dist
+**/.vitepress/cache
+.docusaurus
+.serverless/
+.fusebox/
+.dynamodb/
+.firebase/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
 # ========================
 # Local environment files
@@ -28,6 +80,7 @@ dist-ssr/
 .env
 .env.local
 .env.*.local
+!.env.example
 
 # ========================
 # Editor directories and files
@@ -42,6 +95,7 @@ dist-ssr/
 *.njsproj
 *.sln
 *.sw?
+.vscode-test
 
 # ========================
 # OS generated files
