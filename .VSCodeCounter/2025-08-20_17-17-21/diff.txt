@@ -1,0 +1,42 @@
+Date : 2025-08-20 17:17:21
+Directory : c:\Users\DUMAN\Desktop\NoteAt
+Total : 11 files,  979 codes, 20 comments, 28 blanks, all 1027 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JSON           |          2 |        763 |          0 |          0 |        763 |
+| JavaScript JSX |          3 |        152 |          6 |         18 |        176 |
+| PostCSS        |          4 |         51 |         14 |          9 |         74 |
+| JavaScript     |          2 |         13 |          0 |          1 |         14 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                       | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                          |         11 |        979 |         20 |         28 |      1,027 |
+| . (Files)                                                  |          4 |        776 |          0 |          1 |        777 |
+| src                                                        |          7 |        203 |         20 |         27 |        250 |
+| src (Files)                                                |          3 |         44 |          2 |          6 |         52 |
+| src\components                                             |          4 |        159 |         18 |         21 |        198 |
++------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                   | language       | code       | comment    | blank      | total      |
++------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\DUMAN\Desktop\NoteAt\package-lock.json            | JSON           |        759 |          0 |          0 |        759 |
+| c:\Users\DUMAN\Desktop\NoteAt\package.json                 | JSON           |          4 |          0 |          0 |          4 |
+| c:\Users\DUMAN\Desktop\NoteAt\postcss.config.cjs           | JavaScript     |          6 |          0 |          0 |          6 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\App.css                  | PostCSS        |          1 |          2 |          0 |          3 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\App.jsx                  | JavaScript JSX |         40 |          0 |          4 |         44 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\components\Note.jsx      | JavaScript JSX |          5 |          1 |          0 |          6 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\components\TextInput.css | PostCSS        |          1 |          1 |          0 |          2 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\components\Toolbar.css   | PostCSS        |         46 |         11 |          7 |         64 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\components\Toolbar.jsx   | JavaScript JSX |        107 |          5 |         14 |        126 |
+| c:\Users\DUMAN\Desktop\NoteAt\src\index.css                | PostCSS        |          3 |          0 |          2 |          5 |
+| c:\Users\DUMAN\Desktop\NoteAt\tailwind.config.cjs          | JavaScript     |          7 |          0 |          1 |          8 |
+| Total                                                      |                |        979 |         20 |         28 |      1,027 |
++------------------------------------------------------------+----------------+------------+------------+------------+------------+

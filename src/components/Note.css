@@ -1,0 +1,66 @@
+.note {
+  box-sizing: border-box;
+  display: flex;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  min-height: 30px;
+  background-color: whitesmoke;
+  color: black;
+  overflow: auto;
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+
+/* .locked-note {
+  pointer-events: none;
+  user-select: none;
+} */
+
+.resize-handle-area {
+  width: 0.7rem;
+  height: 0.7rem;
+  background: transparent;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+}
+
+.delete-button {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 25px;
+}
+
+/* Parlak bir editing uyarısı denemesi */
+.editing-border {
+  z-index: 1;
+  animation: glowingBorder 2s linear infinite;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+@keyframes glowingBorder {
+  0% {
+    box-shadow: 0 0 4px grey, 0 0 8px grey, 0 0 12px grey;
+    border-color: grey;
+  }
+  50% {
+    box-shadow: 0 0 6px black, 0 0 12px black, 0 0 18px black;
+    border-color: black;
+  }
+  100% {
+    box-shadow: 0 0 4px grey, 0 0 8px grey, 0 0 12px grey;
+    border-color: grey;
+  }
+}
