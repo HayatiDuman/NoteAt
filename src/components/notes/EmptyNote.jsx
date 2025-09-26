@@ -1,5 +1,5 @@
 import React from "react";
-import TextInput from "./TextInput";
+import TextInput from "../TextInput";
 
 function EmptyNote({ placeholder, data, isEditing, onDataChange }) {
   const { content, styles } = data;

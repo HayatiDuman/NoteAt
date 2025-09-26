@@ -1,6 +1,6 @@
 import React from "react";
-import EmptyNote from "./EmptyNote";
-import ToDoNote from "./ToDoNote";
+import EmptyNote from "../notes/EmptyNote";
+import ToDoNote from "../notes/ToDoNote";
 
 const noteTypes = {
   textNote: { component: EmptyNote, placeholder: "Yeni not..." },

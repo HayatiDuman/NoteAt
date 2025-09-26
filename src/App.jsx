@@ -1,16 +1,29 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import "./App.css";
 import Note from "./components/Note.jsx";
-import Toolbar from "./components/Toolbar.jsx";
+import Toolbar from "./components/ui/Toolbar.jsx";
+import MiniMap from "./components/MiniMap.jsx";
+import { useNotes } from "./hooks/useNotes.js";
 
 function App() {
-  //-----State Management Part-----//
-  const [notes, setNotes] = useState([]);
-  const [selectedNoteType, setSelectedNoteType] = useState("textNote");
-  const [selectedNoteId, setSelectedNoteId] = useState(null);
-  const [editingNoteId, setEditingNoteId] = useState(null);
-  const [isLocked, setIsLocked] = useState(false);
-
+  const {
+    notes,
+    setNotes,
+    addNote,
+    deleteNote,
+    updateNotePosition,
+    updateNoteSize,
+    updateNoteDataAttr,
+    updateStyle,
+    selectedNoteId,
+    setSelectedNoteId,
+    editingNoteId,
+    setEditingNoteId,
+    selectedNoteType,
+    setSelectedNoteType,
+    isLocked,
+    setIsLocked,
+  } = useNotes();
   //-----Reference Management Part-----//
   const containerRef = useRef(null);
   const toolbarRef = useRef(null);
@@ -28,7 +41,6 @@ function App() {
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
-
   const handleMouseMove = (e) => {
     if (!isPanning.current) return;
 
@@ -39,7 +51,6 @@ function App() {
 
     window.scrollBy(-dx, -dy);
   };
-
   const handleMouseUp = () => {
     isPanning.current = false;
     containerRef.current.classList.remove("grabbing");
@@ -47,88 +58,10 @@ function App() {
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
-  //-----Data Management by Note Type Part-----//
-  const getDefaultData = (type) => {
-    switch (type) {
-      case "textNote":
-        return {
-          content: "",
-          styles: {
-            bold: false,
-            italic: false,
-            color: "#000000",
-            backgroundColor: "#ffffff",
-            fontSize: "16px",
-            fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-          },
-        };
-      case "todoNote":
-        return {
-          todoItems: [
-            {
-              id: crypto.randomUUID(),
-              isChecked: false,
-              content: "",
-              styles: {
-                bold: false,
-                italic: false,
-                color: "#000000",
-                backgroundColor: "#ffffff",
-                fontSize: "16px",
-                fontFamily: "system-ui, Avenir, Helvetica, Arial, sans-serif",
-              },
-            },
-          ],
-        };
-    }
-  };
-
-  //-----Notes List Management Part-----//
-  const addNote = () => {
-    const newNote = {
-      id: Date.now(),
-      type: selectedNoteType,
-      position: { x: 100, y: 100 },
-      size: { width: 200, height: 200 },
-      data: getDefaultData(selectedNoteType),
-    };
-    setNotes((prev) => [...prev, newNote]);
-  };
-
-  const deleteNote = (id) => {
-    setNotes((prev) => prev.filter((note) => note.id != id));
-  };
-
-  //-----Posisiton and Size Management Part-----//
-  const updateNotePosition = (id, newPosition) => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note.id === id ? { ...note, position: newPosition } : note
-      )
-    );
-  };
-  const updateNoteSize = (id, newSize) => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note.id === id ? { ...note, size: newSize } : note
-      )
-    );
-  };
-
   const findSelectedNote = () =>
     notes.find((note) => note.id === selectedNoteId) || null;
 
   const selectedNote = findSelectedNote();
-
-  const handleStyleChange = (newStyles) => {
-    setNotes((prevNotes) =>
-      prevNotes.map((note) =>
-        note.id === selectedNoteId
-          ? { ...note, data: { ...note.data, styles: newStyles } }
-          : note
-      )
-    );
-  };
 
   return (
     <div
@@ -140,31 +73,10 @@ function App() {
         <Toolbar
           selectedNoteId={selectedNoteId}
           styles={selectedNote ? selectedNote.data.styles : {}}
-          onStyleChange={handleStyleChange}
+          onStyleChange={updateStyle}
           editingNoteId={editingNoteId}
         />
       </div>
-      {/* <div className="menu">
-        <button className="add-button" onClick={addNote}>
-          +
-        </button>
-        <select
-          name="noteTypesSelecter"
-          className="note-types-selector"
-          onChange={(e) => setSelectedNoteType(e.target.value)}
-        >
-          <option value="textNote">Boş Not</option>
-          <option value="todoNote">Yapılacaklar Listesi</option>
-        </select>
-        <button
-          onClick={() => {
-            setIsLocked(!isLocked);
-            window.getSelection().removeAllRanges();
-          }}
-        >
-          {isLocked ? "Unlock Notes" : "Lock Notes"}
-        </button>
-      </div> */}
       <div className="menu">
         <button className="menu-btn add-btn" onClick={addNote} title="Yeni Not">
           <span className="plus" aria-hidden="true"></span>
@@ -200,6 +112,7 @@ function App() {
         <button className="menu-btn" onClick={() => {}} title={""}></button>
         <button className="menu-btn" onClick={() => {}} title={""}></button>
       </div>
+      <MiniMap notes={notes} canvasWidth={2000} canvasHeight={2000} />
 
       {notes.map((note) => (
         <Note
