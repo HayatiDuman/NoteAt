@@ -2,7 +2,8 @@ import React, { useRef } from "react";
 import "./Note.css";
 import noteTypes from "./constants/noteTypes";
 import useDragging from "../hooks/useDragging";
-//import { document } from "postcss";
+import { useClickOutside } from "../hooks/useClickOutside";
+import useResizing from "../hooks/useResizing";
 
 function Note({
   note,
@@ -23,11 +24,24 @@ function Note({
   const ContentComponent = noteTypes[type]?.component || null;
   const placeholder = noteTypes[type]?.placeholder || "bu ne?";
 
-  const isResizing = useRef(false);
-  const { noteRef, handleMouseDown } = useDragging({
+  const noteRef = useRef(null);
+  const { handleMouseDown } = useDragging({
+    ref: noteRef,
     containerRef,
     onPositionChange,
     isEditing,
+  });
+
+  const { isResizing, handleResizing } = useResizing({
+    ref: noteRef,
+    containerRef,
+    onSizeChange,
+  });
+
+  useClickOutside({
+    refs: [noteRef, toolbarRef],
+    controllerList: [isEditing],
+    onOutsideClick: onEditEnd,
   });
 
   //-----Entering Editting Mode Part-----//
@@ -37,64 +51,6 @@ function Note({
       onEditStart();
     }
   };
-
-  //-----Exciting Editting Mode Part-----//
-  const handleClickOutside = React.useCallback(
-    (e) => {
-      if (
-        isEditing &&
-        noteRef.current &&
-        !noteRef.current.contains(e.target) &&
-        !toolbarRef.current.contains(e.target)
-      ) {
-        window.getSelection().removeAllRanges();
-        onEditEnd();
-      }
-    },
-    [noteRef, toolbarRef, isEditing, onEditEnd]
-  );
-
-  //-----Resizing Controlling Part-----//
-  const handleResizing = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const onResize = (e) => {
-      isResizing.current = true;
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const noteRect = noteRef.current.getBoundingClientRect();
-
-      const maxWidth = containerRect.right - noteRect.left;
-      const maxHeight = containerRect.bottom - noteRect.top;
-
-      const newWidth = Math.min(
-        Math.max(e.clientX - noteRect.left, 50),
-        maxWidth
-      );
-      const newHeight = Math.min(
-        Math.max(e.clientY - noteRect.top, 50),
-        maxHeight
-      );
-
-      onSizeChange({ width: newWidth, height: newHeight });
-    };
-
-    const onResizeEnd = () => {
-      isResizing.current = false;
-      document.removeEventListener("pointermove", onResize);
-      document.removeEventListener("pointerup", onResizeEnd);
-    };
-
-    document.addEventListener("pointermove", onResize);
-    document.addEventListener("pointerup", onResizeEnd);
-  };
-
-  React.useEffect(() => {
-    document.addEventListener("pointerdown", handleClickOutside);
-    return () => {
-      document.removeEventListener("pointerdown", handleClickOutside);
-    };
-  }, [handleClickOutside]);
 
   return (
     <div

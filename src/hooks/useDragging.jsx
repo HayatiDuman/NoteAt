@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 
-function useDragging({ containerRef, onPositionChange, isEditing }) {
-  const noteRef = useRef(null);
+function useDragging({ ref, containerRef, onPositionChange, isEditing }) {
+  // const ref = useRef(null);
   const isDragging = useRef(false);
   const offset = useRef({ x: 0, y: 0 });
 
@@ -15,7 +15,7 @@ function useDragging({ containerRef, onPositionChange, isEditing }) {
     }
 
     isDragging.current = true;
-    const rect = noteRef.current.getBoundingClientRect();
+    const rect = ref.current.getBoundingClientRect();
 
     offset.current = {
       x: e.clientX - rect.left,
@@ -28,11 +28,10 @@ function useDragging({ containerRef, onPositionChange, isEditing }) {
   const handleMouseMove = (e) => {
     if (!isDragging) return;
 
-    //document.body.style.userSelect = "none";
     window.getSelection().removeAllRanges();
 
     const containerRect = containerRef.current.getBoundingClientRect();
-    const noteRect = noteRef.current.getBoundingClientRect();
+    const noteRect = ref.current.getBoundingClientRect();
 
     const newX = Math.min(
       Math.max(e.clientX - containerRect.left - offset.current.x, 0),
@@ -56,7 +55,7 @@ function useDragging({ containerRef, onPositionChange, isEditing }) {
     document.removeEventListener("pointerup", handleMouseUp);
   };
 
-  return { noteRef, handleMouseDown };
+  return { handleMouseDown };
 }
 
 export default useDragging;
