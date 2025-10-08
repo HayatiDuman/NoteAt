@@ -18,6 +18,7 @@ function Note({
   containerRef,
   toolbarRef,
   onClick,
+  zIndex,
 }) {
   const { type, position, size, data } = note;
 
@@ -56,9 +57,12 @@ function Note({
     <div
       className={`note ${isEditing ? "editing-border" : ""} `}
       ref={noteRef}
-      onMouseDown={handleMouseDown}
+      data-id={note.id} // <-- Burayı ekle
+      onMouseDown={(e) => {
+        onClick?.();
+        handleMouseDown(e);
+      }}
       onDoubleClick={handleDoubleClick}
-      onClick={onClick}
       style={{
         pointerEvents: isLocked ? "none" : "auto",
         userSelect: isLocked ? "none" : "",
@@ -67,6 +71,7 @@ function Note({
         top: position.y,
         width: size.width,
         height: size.height,
+        zIndex: zIndex,
       }}
     >
       <ContentComponent

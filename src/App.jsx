@@ -1,14 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
 import Note from "./components/Note.jsx";
 import Toolbar from "./components/ui/Toolbar.jsx";
 import MiniMap from "./components/MiniMap.jsx";
 import { useNotes } from "./hooks/useNotes.js";
+import ContextMenu from "./components/ui/ContextMenu.jsx";
 
 function App() {
   const {
     notes,
     setNotes,
+    notesZIndex,
+    bringNoteToFront,
     addNote,
     deleteNote,
     updateNotePosition,
@@ -27,6 +30,33 @@ function App() {
   const toolbarRef = useRef(null);
   const isPanning = useRef(false);
   const lastPosOfTarget = useRef({ x: 0, y: 0 });
+  const [contextMenu, setContextMenu] = useState({
+    isOpen: false,
+    position: { x: 0, y: 0 },
+    targetID: null,
+  });
+
+  //-----Context Menu Management-----//
+  const handleContextMenu = (e) => {
+    const target = e.target.closest(".note");
+
+    if (target) {
+      e.preventDefault();
+      const id = target.dataset.id;
+      setContextMenu({
+        isOpen: true,
+        position: { x: e.pageX, y: e.pageY },
+        targetID: id,
+      });
+    } else {
+      // Boş alanda normal tarayıcı menu açık kalsın
+      setContextMenu({ ...contextMenu, isOpen: false, targetID: null });
+    }
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu((prev) => ({ ...prev, isOpen: false }));
+  };
 
   // Tahtayı sürükleme (pan)
   const handleMouseDown = (e) => {
@@ -66,7 +96,16 @@ function App() {
       className={`container ${isLocked ? "locked" : ""}`}
       ref={containerRef}
       onMouseDown={handleMouseDown}
+      onContextMenu={handleContextMenu}
     >
+      <div className="context-menu-dnm">
+        <ContextMenu
+          position={contextMenu.position}
+          isOpen={contextMenu.isOpen}
+          onClose={closeContextMenu}
+          onDelete={() => deleteNote(contextMenu.targetID)}
+        />
+      </div>
       <div ref={toolbarRef}>
         <Toolbar
           selectedNoteId={selectedNoteId}
@@ -120,7 +159,10 @@ function App() {
           isLocked={isLocked}
           onEditStart={() => setEditingNoteId(note.id)}
           onEditEnd={() => setEditingNoteId(null)}
-          onClick={() => setSelectedNoteId(note.id)}
+          onClick={() => {
+            setSelectedNoteId(note.id);
+            bringNoteToFront(note.id);
+          }}
           onDelete={() => deleteNote(note.id)}
           onDataChange={(newData) => {
             setNotes((prev) =>
@@ -131,6 +173,7 @@ function App() {
           onSizeChange={(newSize) => updateNoteSize(note.id, newSize)}
           containerRef={containerRef}
           toolbarRef={toolbarRef}
+          zIndex={notesZIndex[note.id] || 1} // default 1
         />
       ))}
     </div>

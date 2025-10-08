@@ -1,7 +1,33 @@
+// ContextMenu.jsx
+import { useRef } from "react";
+import { useClickOutside } from "../../hooks/useClickOutside";
 import "./ContextMenu.css";
 
-function ContextMenu() {
-  return <div className="context-menu"></div>;
-}
+export default function ContextMenu({ position, isOpen, onClose, onDelete }) {
+  const menuRef = useRef(null);
 
-export default ContextMenu;
+  useClickOutside({
+    refs: [menuRef],
+    controllerList: [isOpen],
+    onOutsideClick: onClose,
+  });
+
+  if (!isOpen) return null;
+
+  return (
+    <ul
+      ref={menuRef}
+      className="context-menu"
+      style={{ left: position?.x || 0, top: position?.y || 0 }}
+    >
+      <li
+        onClick={() => {
+          onDelete?.();
+          onClose?.();
+        }}
+      >
+        Notu Sil
+      </li>
+    </ul>
+  );
+}
