@@ -41,14 +41,14 @@ This project showcases **React, custom hooks, draggable & resizable UI, context 
 ## 🔹 Notes / Future Improvements
 
 - Full integration of Context API across the app.
--Complete functionality for all menu buttons.
--Improve landing page content and styling.
--Add mobile responsiveness and design improvements.
+- Complete functionality for all menu buttons.
+- Improve landing page content and styling.
+- Add mobile responsiveness and design improvements.
 
 ---
 
 ## 🔹 Purpose
 
 This project serves as a portfolio piece demonstrating interactive frontend skills.
-The MVP version provides a working post-it note application with opportunities for future enhancements.
+This version provides a working post-it note application with opportunities for future enhancements.
 
